@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <!-- filepath: c:\Users\phath\OneDrive\Documents\Phoenix Code\learning java\calculator.html -->
+        <!-- ...existing code... -->
+        <link rel="manifest" href="manifest.json">
+        <!-- ...existing code... -->
+    </head>
+    <body>
+        <table border="1">
+            <tr>
+                <td colspan="4">
+                    <input type="text" id="inputBox" value="0"/>
+                </td>
+            </tr>
+            <tr>
+                <td onclick="digitButtpress(7)">7</td>
+                <td onclick="digitButtpress(8)">8</td>
+                <td onclick="digitButtpress(9)">9</td>
+                <td onclick="operatButtPress('x')">x</td>
+            </tr>
+            <tr>
+                <td onclick="digitButtpress(4)">4</td>
+                <td onclick="digitButtpress(5)">5</td>
+                <td onclick="digitButtpress(6)">6</td>
+                <td onclick="operatButtPress('-')">-</td>
+            </tr>
+            <tr>
+                <td onclick="digitButtpress(1)">1</td>
+                <td onclick="digitButtpress(2)">2</td>
+                <td onclick="digitButtpress(3)">3</td>
+                <td onclick="operatButtPress('+')">+</td>
+            </tr>
+            <tr>
+                <td colspan="2">0</td>
+                
+                <td onclick="buttAcPressed()">AC</td>
+                <td onclick="operatButtPress('/')">/</td>   
+            </tr>
+            <tr>
+                <td colspan="4" onclick="buttEqualPressed()">=</td>
+            </tr>
+        </table>
+        
+        <script>
+            var newLine = true;    //Boolean variable. Determines if the next thing the user types should be on a new line
+            var value1;
+            var currentOperator;
+            //Event handler for when any button is pressed
+            function digitButtpress(button){
+
+                if (newLine){
+                    document.getElementById("inputBox").value = button;
+                    newLine = false;
+                } else {
+
+                    var currentValue = document.getElementById("inputBox").value;
+                    document.getElementById("inputBox").value = currentValue + button;
+
+                }
+            }
+            //Event handler for when the AC button is pressed
+            function buttAcPressed(){
+                document.getElementById("inputBox").value = 0;
+
+                newLine = true;
+            }
+            function operatButtPress(operator){
+                currentOperator = operator;
+                value1 = parseInt(document.getElementById("inputBox").value);
+                newLine = true;
+            }
+            //Event handler for when the = button is pressed
+            function buttEqualPressed(){
+                var value2 = parseInt(document.getElementById("inputBox").value);
+                var finalTotal;
+
+                switch(currentOperator){
+                    case "+":
+                        finalTotal = value1 + value2;
+                        break;
+                    
+                    case "-":
+                        finalTotal = value1 - value2;
+                        break;
+                        
+                    case "x":
+                        finalTotal = value1 * value2;
+                        break;
+                        
+                    case "/":
+                        finalTotal = value1 / value2;
+                        break;
+                        
+
+                }
+                document.getElementById("inputBox").value = finalTotal;
+
+                value1 = 0;
+                newLine = true;
+
+            }
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js');
+            }
+        </script>
+    </body>
+</html>
